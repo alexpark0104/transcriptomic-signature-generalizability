@@ -1,7 +1,6 @@
 # A Proof‑of‑Concept Transcriptomic Analysis of Anti‑PD‑1 Response in Melanoma
 
-**Authors:** Alex Park  
-**Affiliation:** Regis High School  
+ 
 
 ## Overview
 This repository contains the complete analysis pipeline for the study:
