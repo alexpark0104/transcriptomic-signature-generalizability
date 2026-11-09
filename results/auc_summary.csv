@@ -1,0 +1,4 @@
+estimate,auc,n_samples
+apparent_in_sample,0.9951219512195122,51
+nested_cv_mean,0.47777777777777775,51
+nested_cv_pooled,0.4536585365853658,51

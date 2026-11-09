@@ -14,9 +14,13 @@ def load_discovery_data(expr_path, clin_path):
         return s
 
     clinical['expr_sample'] = clinical['Sample'].apply(format_sample)
-    common = set(clinical['expr_sample']).intersection(expr.index)
-    expr = expr.loc[list(common)]
-    clinical = clinical.set_index('expr_sample').loc[list(common)]
+    common = sorted(
+        set(clinical['expr_sample']).intersection(expr.index)
+    )
+
+    expr = expr.loc[common]
+    clinical = clinical.set_index('expr_sample').loc[common]
+
 
     def map_response(val):
         if isinstance(val, str):
@@ -71,11 +75,26 @@ def parse_gse78220_series_matrix(raw_text):
     return pd.Series(labels_pt).dropna()
 
 def load_validation_data(series_path, expr_path):
+    # The file may be genuinely gzip-compressed or plain text
+    # despite having a .gz filename.
     with open(series_path, 'rb') as f:
-        raw = gzip.decompress(f.read()).decode('utf-8', errors='ignore')
+        file_bytes = f.read()
+
+    if file_bytes[:2] == b'\x1f\x8b':
+        raw = gzip.decompress(file_bytes).decode('utf-8', errors='ignore')
+    else:
+        raw = file_bytes.decode('utf-8', errors='ignore')
+
     labels = parse_gse78220_series_matrix(raw)
+
     expr_raw = pd.read_excel(expr_path, index_col=0)
     expr = expr_raw.T
-    expr.index = [idx.split('.')[0] for idx in expr.index]
+    expr.index = [str(idx).split('.')[0] for idx in expr.index]
+
     common = expr.index.intersection(labels.index)
+
+    print(f"Validation samples with expression and labels: {len(common)}")
+    print(f"Validation responders: {int(labels.loc[common].sum())}")
+    print(f"Validation non-responders: {int((labels.loc[common] == 0).sum())}")
+
     return expr.loc[common], labels.loc[common]

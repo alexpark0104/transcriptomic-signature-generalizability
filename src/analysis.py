@@ -1,5 +1,6 @@
 import numpy as np
 from sklearn.linear_model import LogisticRegression
+from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import roc_auc_score
 from sklearn.preprocessing import StandardScaler
@@ -53,3 +54,34 @@ def nested_cv(X, y, n_genes=10, outer_splits=5, inner_splits=5, random_state=42)
         outer_probs[test_idx] = prob
         fold_aucs.append(roc_auc_score(y_test, prob))
     return np.mean(fold_aucs), roc_auc_score(y, outer_probs), outer_probs
+def apparent_auc(X, y, n_genes=10):
+    """
+    Estimate apparent, in-sample performance.
+
+    Feature selection and model fitting both use the full dataset.
+    This is intentionally optimistic and is included only to quantify
+    the difference between apparent and leakage-resistant performance.
+    """
+    top_indices, _ = univariate_screening(
+        X,
+        y,
+        n_top=n_genes,
+        cv_splits=5,
+        random_state=42,
+    )
+
+    scaler = StandardScaler()
+    X_selected = X[:, top_indices]
+    X_scaled = scaler.fit_transform(X_selected)
+
+    model = LogisticRegression(
+        C=1.0,
+        solver='lbfgs',
+        max_iter=1000,
+    )
+    model.fit(X_scaled, y)
+
+    probabilities = model.predict_proba(X_scaled)[:, 1]
+    auc = roc_auc_score(y, probabilities)
+
+    return auc, top_indices

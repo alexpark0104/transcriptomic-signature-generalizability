@@ -1,0 +1,39 @@
+Model audit
+
+Discovery-selected genes:
+401613 -> SERTM2
+4534 -> MTM1
+221823 -> PRPS1L1
+10472 -> ZBTB18
+5376 -> PMP22
+3930 -> LBR
+9340 -> GLP2R
+132014 -> IL17RE
+22828 -> SCAF8
+5754 -> PTK7
+
+External platform:
+9 of 10 discovery-selected genes available.
+Missing gene: 401613 -> SERTM2
+
+Performance:
+Apparent discovery AUC: 0.9951219512
+Nested-CV mean AUC: 0.4777777778
+Nested-CV pooled AUC: 0.4536585366
+Original fixed-signature external AUC: 0.4461538462
+9-gene sensitivity external AUC: 0.623077
+
+Interpretation:
+The 9-gene external result is a sensitivity analysis, not definitive
+validation of the complete 10-gene discovery-derived model.
+
+Uncertainty:
+9-gene sensitivity external AUC: 0.623
+Bootstrap 95% CI: 0.341 to 0.875
+Valid bootstrap replicates: 10000
+
+Interpretation:
+The confidence interval includes chance performance, so the 9-gene
+sensitivity result does not establish successful external validation.
+Because the external cohort contains only 23 samples and uses a different
+expression-data format, this result is exploratory.

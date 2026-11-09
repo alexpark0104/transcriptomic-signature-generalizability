@@ -1,24 +1,33 @@
-# A Proof‑of‑Concept Transcriptomic Analysis of Anti‑PD‑1 Response in Melanoma
+# When Transcriptomic Signatures Fail to Generalize
 
- 
+## Research question
 
-## Overview
-This repository contains the complete analysis pipeline for the study:
-> *"A 10‑gene transcriptomic signature for anti‑PD‑1 response in melanoma shows limited cross‑validation and external generalizability."*
+How much can apparent predictive performance be overstated when a transcriptomic signature is selected and evaluated in a small, high-dimensional discovery cohort?
 
-The analysis demonstrates the risk of overfitting in small‑sample, high‑dimensional biomarker discovery.
+This project examines that question using a melanoma anti-PD-1 response dataset. The analysis compares apparent in-sample performance with leakage-resistant nested cross-validation and exploratory external transportability analyses.
 
-## Key Findings
-- **Discovery cohort (GSE91061, n=51):** LOOCV AUC = 0.86 (overly optimistic).
-- **Internal validation (nested 5‑fold CV):** Mean AUC ≈ 0.40 (unbiased estimate).
-- **External validation (GSE78220, n=28):** AUC = 0.38 (below random).
-- **Conclusion:** The signature does not generalise; the results serve as a cautionary tale.
+## Main finding
 
-## Datasets Used
-1. **Discovery:** GSE91061 (Riaz et al., 2017) – `rld.BMS038.20171011.csv` and `bms038_clinical_data.csv`
-2. **Validation:** GSE78220 (Hugo et al., 2016) – `GSE78220_series_matrix.txt.gz` and `GSE78220_PatientFPKM.xlsx`
+A feature-selection pipeline produced an apparent discovery-cohort AUC of approximately **0.995** when feature selection and model fitting were performed using all 51 discovery samples.
 
-## How to Reproduce
-```bash
-pip install -r requirements.txt
-python src/run_pipeline.py
+When the same feature-selection procedure was evaluated using nested 5-fold cross-validation, performance fell to:
+
+- Mean outer-fold AUC: **0.478**
+- Pooled out-of-fold AUC: **0.454**
+
+The apparent estimate therefore exceeded the pooled nested-CV estimate by approximately **0.541 AUC points**.
+
+This result demonstrates how strongly small-sample transcriptomic performance can be overstated when feature selection and evaluation are performed on the same patients.
+
+## Primary analysis
+
+The primary analysis uses the following evaluation levels:
+
+1. **Apparent discovery performance:** feature selection and model fitting use the full discovery cohort, and predictions are evaluated on that same cohort.
+2. **Nested cross-validation:** gene selection and model fitting occur within the training portion of each outer fold; performance is evaluated only on held-out patients.
+3. **Pooled nested-CV performance:** all outer-fold held-out predictions are pooled before calculating the AUC.
+
+The primary results are saved in:
+
+```text
+results/auc_summary.csv
