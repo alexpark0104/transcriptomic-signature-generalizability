@@ -1,8 +1,8 @@
 import numpy as np
+import pandas as pd
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics import roc_auc_score
 from sklearn.model_selection import StratifiedKFold
-from sklearn.metrics import roc_auc_score
 from sklearn.preprocessing import StandardScaler
 import warnings
 warnings.filterwarnings('ignore')
@@ -85,3 +85,49 @@ def apparent_auc(X, y, n_genes=10):
     auc = roc_auc_score(y, probabilities)
 
     return auc, top_indices
+
+def repeated_nested_cv(
+    X,
+    y,
+    n_repeats=20,
+    n_genes=10,
+    outer_splits=5,
+    inner_splits=5,
+    random_state=42,
+):
+    """
+    Repeat the complete nested-CV procedure with different fold splits.
+
+    Each repeat changes the random seed used for both the outer and inner
+    cross-validation splits. Feature selection remains inside each outer
+    training fold.
+    """
+    results = []
+
+    for repeat in range(n_repeats):
+        repeat_seed = random_state + repeat
+
+        mean_auc, pooled_auc, _ = nested_cv(
+            X,
+            y,
+            n_genes=n_genes,
+            outer_splits=outer_splits,
+            inner_splits=inner_splits,
+            random_state=repeat_seed,
+        )
+
+        results.append({
+            "repeat": repeat + 1,
+            "random_state": repeat_seed,
+            "mean_outer_auc": mean_auc,
+            "pooled_outer_auc": pooled_auc,
+        })
+
+        print(
+            f"Repeat {repeat + 1}/{n_repeats}: "
+            f"mean AUC = {mean_auc:.3f}, "
+            f"pooled AUC = {pooled_auc:.3f}"
+        )
+
+    return pd.DataFrame(results)
+

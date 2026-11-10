@@ -1,0 +1,16 @@
+Discovery cohort patient audit
+
+Expression rows: 51
+Unique expression row IDs: 51
+Clinical rows: 51
+Unique clinical row IDs: 51
+Responders: 10
+Non-responders: 41
+Missing labels: 0
+Duplicate expression IDs: none
+Duplicate clinical IDs: none
+
+Interpretation:
+The discovery cohort contains 51 unique patients with no detected duplicate
+expression or clinical identifiers. The response classes are imbalanced,
+with 10 responders and 41 non-responders.
