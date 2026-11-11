@@ -18,7 +18,7 @@ expr, labels, _ = load_discovery_data(
 results = repeated_nested_cv(
     expr.values,
     labels.values,
-    n_repeats=2,
+    n_repeats=5,
     n_genes=10,
     outer_splits=5,
     inner_splits=5,
@@ -26,9 +26,9 @@ results = repeated_nested_cv(
 )
 
 Path("results").mkdir(exist_ok=True)
-results.to_csv("results/repeated_nested_cv_test.csv", index=False)
+results.to_csv("results/repeated_nested_cv.csv", index=False)
 
-print("\nSaved results/repeated_nested_cv_test.csv")
+print("\nSaved results/repeated_nested_cv.csv")
 print(results)
 print("\nSummary:")
 print(results[["mean_outer_auc", "pooled_outer_auc"]].describe())
