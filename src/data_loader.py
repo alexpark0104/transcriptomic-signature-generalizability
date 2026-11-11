@@ -52,7 +52,7 @@ def parse_gse78220_series_matrix(raw_text):
             for i, v in enumerate(vals):
                 if i < len(gsm_list):
                     gsm = gsm_list[i]
-                    if 'partial response' in v:
+                    if 'partial response' in v or 'complete response' in v:
                         labels[gsm] = 1
                     elif 'progressive disease' in v or 'stable disease' in v:
                         labels[gsm] = 0
@@ -63,7 +63,7 @@ def parse_gse78220_series_matrix(raw_text):
                 for i, v in enumerate(vals):
                     if i < len(gsm_list):
                         gsm = gsm_list[i]
-                        if 'partial response' in v:
+                        if 'partial response' in v or 'complete response' in v:
                             labels[gsm] = 1
                         elif 'progressive disease' in v or 'stable disease' in v:
                             labels[gsm] = 0
