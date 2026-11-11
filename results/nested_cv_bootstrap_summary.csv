@@ -1,0 +1,2 @@
+mean_outer_auc,pooled_outer_auc,bootstrap_ci_lower,bootstrap_ci_upper,n_patients,n_bootstrap_replicates
+0.47777777777777775,0.4536585365853658,0.2444315245478036,0.6628329809725153,51,9999

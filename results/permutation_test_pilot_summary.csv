@@ -1,0 +1,2 @@
+n_permutations,observed_apparent_auc,observed_nested_pooled_auc,null_apparent_mean,null_apparent_sd,null_apparent_min,null_apparent_max,null_nested_mean,null_nested_sd,null_nested_min,null_nested_max,null_apparent_at_least_observed,null_nested_at_least_chance
+10,0.9951219512195122,0.4536585365853658,0.9917073170731708,0.009564514582018038,0.975609756097561,1.0,0.45268292682926836,0.11939433378646284,0.3048780487804878,0.648780487804878,6,3
