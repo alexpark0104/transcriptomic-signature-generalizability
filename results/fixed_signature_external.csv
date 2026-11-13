@@ -1,2 +1,2 @@
-analysis,auc,n_external,n_responders,n_nonresponders
-original_fixed_signature_external,0.4461538461538461,23,10,13
+analysis,auc,n_external,n_responders,n_nonresponders,n_genes_used,genes_used,genes_missing
+fixed_signature_external,0.46153846153846156,28,15,13,8,RLBP1;C1orf168;CASZ1;SERPINB4;SLC25A38;ZNF680;CHIT1;HTR2C,401613;KRTAP19-3

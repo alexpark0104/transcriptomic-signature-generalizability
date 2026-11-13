@@ -1,2 +1,2 @@
-analysis,auc,bootstrap_ci_lower,bootstrap_ci_upper,n_external,n_responders,n_nonresponders,n_selected_genes,n_shared_genes,missing_gene_ids
-discovery_derived_9_gene_sensitivity,0.6230769230769231,0.34126082251082246,0.8750480769230763,23,10,13,10,9,401613
+analysis,auc,bootstrap_ci_lower,bootstrap_ci_upper,n_external,n_responders,n_nonresponders,n_selected_genes,n_shared_genes,n_genes_scored,missing_gene_ids,zero_variance_gene_ids,scaling,auc_with_discovery_scaling,n_valid_bootstrap
+discovery_derived_9_gene_sensitivity,0.5435897435897435,0.3163265306122449,0.7555555555555555,28,15,13,10,9,9,401613,,within_external_cohort,0.6358974358974359,10000

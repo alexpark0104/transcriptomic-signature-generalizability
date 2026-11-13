@@ -1,0 +1,7 @@
+method,estimate,auc,n_samples
+inner_cv,apparent_in_sample,0.9926829268292683,51
+inner_cv,nested_cv_mean,0.4652777777777778,51
+inner_cv,nested_cv_pooled,0.43658536585365854,51
+train_auc,apparent_in_sample,0.9902439024390244,51
+train_auc,nested_cv_mean,0.4083333333333334,51
+train_auc,nested_cv_pooled,0.4414634146341463,51

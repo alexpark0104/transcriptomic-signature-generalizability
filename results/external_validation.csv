@@ -1,0 +1,4 @@
+analysis,role,auc,bootstrap_ci_lower,bootstrap_ci_upper,p_one_sided,p_two_sided,n_external,n_responders,n_nonresponders,n_genes_defined,n_genes_scored,genes_dropped_zero_variance,aliases_used,n_valid_bootstrap
+discovery_derived_inner_cv,primary,0.5076923076923077,0.27807486631016043,0.732620320855615,0.48162908408792,0.96325816817584,28,15,13,10,10,,SERTM2->LINC00890,10000
+discovery_derived_train_auc,secondary,0.5128205128205128,0.2871794871794872,0.7389062499999998,0.4632971033408366,0.9265942066816732,28,15,13,10,10,,SERTM2->LINC00890;H1-10-AS1->H1FX-AS1,10000
+inherited_candidate,inherited,0.41025641025641024,0.2,0.6417112299465241,0.7964976424348573,0.4335620217098579,28,15,13,10,10,,SERTM2->LINC00890,10000

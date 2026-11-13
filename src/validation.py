@@ -2,7 +2,6 @@ import os
 import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import roc_auc_score, roc_curve
-from config import ENTREZ_TO_SYMBOL, COEFFICIENTS
 
 
 def match_signature_genes(expr, gene_symbols, coefficients):

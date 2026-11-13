@@ -1,0 +1,25 @@
+entrez_id,symbol,description,aliases,symbol_in_external,alias_found_in_external,used_in,source,retrieved
+1118,CHIT1,chitinase 1,CHI3;CHIT;CHITD,True,,inherited_config,NCBI Gene esummary,2026-11-12
+3097,HIVEP2,HIVEP zinc finger 2,HIV-EP2;MBP-2;MIBP1;MRD43;SHN2;ZAS2;ZNF40B,True,,discovery_train_auc,NCBI Gene esummary,2026-11-12
+3358,HTR2C,5-hydroxytryptamine receptor 2C,5-HT1C;5-HT2C;5-HTR2C;5HTR2C;HTR1C,True,,inherited_config,NCBI Gene esummary,2026-11-12
+3930,LBR,lamin B receptor,C14SR;DHCR14B;LMN2R;PHA;PHASK;TDRD18,True,,discovery_inner_cv,NCBI Gene esummary,2026-11-12
+4534,MTM1,myotubularin 1,CNM;CNMX;MTMX;XLMTM,True,,discovery_inner_cv,NCBI Gene esummary,2026-11-12
+5376,PMP22,peripheral myelin protein 22,CIDP;CMT1A;CMT1E;DSS;GAS-3;GAS3;HMSNIA;HNPP;Sp110,True,,discovery_inner_cv;discovery_train_auc,NCBI Gene esummary,2026-11-12
+5754,PTK7,protein tyrosine kinase 7 (inactive),CCK-4;CCK4,True,,discovery_inner_cv,NCBI Gene esummary,2026-11-12
+6017,RLBP1,retinaldehyde binding protein 1,CRALBP,True,,inherited_config,NCBI Gene esummary,2026-11-12
+8710,SERPINB7,serpin family B member 7,MEGSIN;PPKN;TP55,True,,inherited_config,NCBI Gene esummary,2026-11-12
+9340,GLP2R,glucagon like peptide 2 receptor,,True,,discovery_inner_cv;discovery_train_auc,NCBI Gene esummary,2026-11-12
+9397,NMT2,N-myristoyltransferase 2,,True,,discovery_train_auc,NCBI Gene esummary,2026-11-12
+9616,RNF7,ring finger protein 7,CKBBP1;ROC2;SAG;rbx2,True,,discovery_train_auc,NCBI Gene esummary,2026-11-12
+10472,ZBTB18,zinc finger and BTB domain containing 18,C1DELq42q44;C1DELq43q44;C2H2-171;DEL1Q42Q44;DEL1Q43Q44;MRD22;RP58;TAZ-1;ZNF238,True,,discovery_inner_cv;discovery_train_auc,NCBI Gene esummary,2026-11-12
+10991,SLC38A3,solute carrier family 38 member 3,DEE102;G17;NAT1;SN1;SNAT3,True,,inherited_config,NCBI Gene esummary,2026-11-12
+22828,SCAF8,SR-related CTD associated factor 8,RBM16,True,,discovery_inner_cv;discovery_train_auc,NCBI Gene esummary,2026-11-12
+90737,PAGE5,PAGE family member 5,CT16;CT16.1;CT16.2;GAGEE1;PAGE-5,True,,inherited_config,NCBI Gene esummary,2026-11-12
+201163,FLCN,folliculin,BHD;DENND8B;FLCL,True,,discovery_train_auc,NCBI Gene esummary,2026-11-12
+221823,PRPS1L1,phosphoribosyl pyrophosphate synthetase 1 like 1,PRPS3;PRPSL;PRS-III,True,,discovery_inner_cv,NCBI Gene esummary,2026-11-12
+255189,PLA2G4F,phospholipase A2 group IVF,PLA2G4FZ,True,,inherited_config,NCBI Gene esummary,2026-11-12
+260436,FDCSP,follicular dendritic cell secreted protein,C4orf7;FDC-SP,True,,inherited_config,NCBI Gene esummary,2026-11-12
+339942,H1-10-AS1,H1-10 antisense RNA 1,C3orf47;H1FX-AS1,False,H1FX-AS1,discovery_train_auc,NCBI Gene esummary,2026-11-12
+388533,KRTDAP,keratinocyte differentiation associated protein,KDAP;UNQ467,True,,inherited_config,NCBI Gene esummary,2026-11-12
+401613,SERTM2,serine rich and transmembrane domain containing 2,CARDEL;DKFZp686D0853;LINC00890,False,LINC00890,discovery_inner_cv;discovery_train_auc;inherited_config,NCBI Gene esummary,2026-11-12
+408263,FNDC9,fibronectin type III domain containing 9,C5orf40,True,,discovery_inner_cv,NCBI Gene esummary,2026-11-12
