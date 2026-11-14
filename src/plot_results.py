@@ -54,7 +54,9 @@ rows = [
          band=null_range("nested_pooled_auc"), color="#2980b9"),
     dict(label=f"Nested CV, mean of {int(rep['n_repeats'])} splits\n(whisker: 95% range across splits)",
          value=rep["mean"], lo=rep["p2.5"], hi=rep["p97.5"],
-         band=null_range("nested_pooled_auc"), color="#2980b9"),
+         # No band: the single-split null range is NOT the null for a mean over
+         # many splits (that would need permutations that also average over splits).
+         band=None, color="#2980b9"),
     dict(label=f"External cohort GSE78220 (n = {int(ext['n_external'])})\n(whisker: 95% bootstrap CI)",
          value=ext["auc"], lo=ext["bootstrap_ci_lower"], hi=ext["bootstrap_ci_upper"],
          band=None, color="#27ae60"),
@@ -82,7 +84,7 @@ ax.set_yticks(ypos)
 ax.set_yticklabels([r["label"] for r in rows], fontsize=9)
 ax.set_xlim(0, 1.08)
 ax.set_xlabel("Area under the ROC curve (AUC)")
-ax.set_title("A 10-gene signature: near-perfect in-sample, indistinguishable from chance out of sample",
+ax.set_title("A 10-gene signature: near-perfect in-sample, no detectable signal out of sample",
              fontsize=11, fontweight="bold")
 ax.legend(frameon=False, loc="upper center", bbox_to_anchor=(0.5, -0.16), ncol=2, fontsize=8)
 ax.grid(axis="x", alpha=0.25)
@@ -90,7 +92,7 @@ for side in ("top", "right"):
     ax.spines[side].set_visible(False)
 fig.text(0.5, 0.005,
          "Primary method: gene screening by inner cross-validation. Grey bands show what shuffled "
-         "outcome labels produce for the same procedure.", ha="center", fontsize=8)
+         "outcome labels produce for the same single-split procedure. Absence of a detectable signal is not evidence of absence: see the power simulation.", ha="center", fontsize=8)
 fig.tight_layout(rect=(0, 0.05, 1, 1))
 
 output = FIGURES / "primary_auc_comparison.png"

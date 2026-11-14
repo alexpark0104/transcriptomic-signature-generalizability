@@ -1,81 +1,64 @@
+"""Figure: spread of the nested-CV pooled AUC across many fold assignments.
+
+Run from the repo root:  python src/plot_repeated_cv.py
+
+Reads results/repeated_nested_cv.csv (both screening methods, written by
+run_repeated_cv.py) and results/permutation_test_full_summary.csv.
+
+Each panel is one screening method. The histogram is the pooled nested AUC over
+all repeats (each repeat = a new random assignment of patients to folds).
+The grey band is the 95% range of the SAME single-split statistic when outcome
+labels are shuffled (whole-pipeline permutation test), so the two are directly
+comparable. The spread across repeats reflects fold assignment only; it is not
+a confidence interval for the true AUC.
+"""
 from pathlib import Path
 
-import pandas as pd
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-
+import pandas as pd
 
 RESULTS_DIR = Path("results")
 FIGURES_DIR = RESULTS_DIR / "figures"
 FIGURES_DIR.mkdir(parents=True, exist_ok=True)
 
-results = pd.read_csv(
-    RESULTS_DIR / "repeated_nested_cv.csv"
-)
+runs = pd.read_csv(RESULTS_DIR / "repeated_nested_cv.csv")
+perm = pd.read_csv(RESULTS_DIR / "permutation_test_full_summary.csv")
 
-fig, ax = plt.subplots(figsize=(8, 5.5))
+titles = {"inner_cv": "Screening by inner-CV AUC (primary)",
+          "train_auc": "Screening by training-fold AUC"}
+methods = [m for m in titles if m in set(runs["method"])] or list(runs["method"].unique())
 
-x = results["repeat"]
+fig, axes = plt.subplots(1, len(methods), figsize=(6 * len(methods), 4.8), squeeze=False)
+for ax, method in zip(axes[0], methods):
+    values = runs.loc[runs["method"] == method, "pooled_outer_auc"].values
+    n = len(values)
+    lo, hi = values.min(), values.max()
 
-ax.axhline(
-    0.5,
-    color="gray",
-    linestyle=":",
-    linewidth=1.5,
-    label="Chance (AUC = 0.500)",
-)
+    ax.hist(values, bins=20, color="#2980b9", alpha=0.75, edgecolor="black", linewidth=0.4)
 
-ax.plot(
-    x,
-    results["pooled_outer_auc"],
-    marker="o",
-    linewidth=2,
-    markersize=7,
-    color="#2980b9",
-    label="Pooled outer-fold AUC",
-)
+    row = perm[(perm["method"] == method) & (perm["statistic"] == "nested_pooled_auc")]
+    if len(row):
+        row = row.iloc[0]
+        ax.axvspan(row["null_2.5pct"], row["null_97.5pct"], color="gray", alpha=0.15,
+                   label="Shuffled-label null, 95% range (single split)")
+    ax.axvline(0.5, color="gray", linestyle=":", linewidth=1.5, label="Chance = 0.5")
+    ax.axvline(values.mean(), color="#c0392b", linestyle="--", linewidth=1.8,
+               label=f"Mean = {values.mean():.3f} (SD {values.std(ddof=1):.3f})")
 
-mean_auc = results["pooled_outer_auc"].mean()
-min_auc = results["pooled_outer_auc"].min()
-max_auc = results["pooled_outer_auc"].max()
+    ax.set_title(f"{titles.get(method, method)}\n{n} repeats, range {lo:.3f} to {hi:.3f}", fontsize=10)
+    ax.set_xlabel("Pooled outer-fold AUC")
+    ax.set_ylabel("Number of repeats")
+    ax.set_xlim(0.15, 0.85)
+    ax.legend(frameon=False, fontsize=8, loc="upper left")
+    ax.grid(axis="y", alpha=0.25)
+    ax.spines["top"].set_visible(False)
+    ax.spines["right"].set_visible(False)
 
-ax.axhline(
-    mean_auc,
-    color="#c0392b",
-    linestyle="--",
-    linewidth=1.8,
-    label=f"Mean = {mean_auc:.3f}",
-)
-
-ax.fill_between(
-    [x.min(), x.max()],
-    min_auc,
-    max_auc,
-    color="#2980b9",
-    alpha=0.10,
-    label=f"Range = {min_auc:.3f}–{max_auc:.3f}",
-)
-
-ax.set_xticks(x)
-ax.set_xlabel("Repeat")
-ax.set_ylabel("Pooled outer-fold AUC")
-ax.set_ylim(0.25, 0.70)
-ax.set_title(
-    "Nested-CV performance varies across fold assignments"
-)
-ax.legend(frameon=False, loc="best")
-ax.grid(axis="y", alpha=0.25)
-ax.spines["top"].set_visible(False)
-ax.spines["right"].set_visible(False)
-
-fig.text(
-    0.5,
-    0.01,
-    "Five repeats; each repeat used a new 5-fold outer split",
-    ha="center",
-    fontsize=10,
-)
-
-fig.tight_layout(rect=(0, 0.05, 1, 1))
+fig.suptitle("Nested-CV AUC depends heavily on how patients are assigned to folds",
+             fontsize=12, fontweight="bold")
+fig.tight_layout(rect=(0, 0, 1, 0.94))
 
 output_path = FIGURES_DIR / "repeated_nested_cv_stability.png"
 fig.savefig(output_path, dpi=300, bbox_inches="tight")
