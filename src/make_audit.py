@@ -194,7 +194,8 @@ sections += ["", f"Checks passed: {len(checks) - len(failed)} of {len(checks)}"]
 
 # ----------------------------------------------------------- run_manifest
 commit = git("rev-parse", "HEAD")
-dirty = git("status", "--porcelain")
+# Only code and data count: the results folder is output, and changes there do not make the code "dirty".
+dirty = git("status", "--porcelain", "--", ".", ":(exclude)results")
 packages = []
 for name in ("numpy", "pandas", "scipy", "scikit-learn", "matplotlib", "openpyxl", "truststore"):
     try:
