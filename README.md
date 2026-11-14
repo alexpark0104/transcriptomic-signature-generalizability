@@ -111,10 +111,7 @@ not as validation.
 | 3 | 0.08 |
 | 20 | 0.06 |
 
-Power at larger n (for example n = 200: 1.00, 1.00, 0.10 for k = 1, 3, 20)
-shows how quickly detectability depends on how concentrated the signal is.
-Cells use 50 simulated studies each, so individual power values carry Monte
-Carlo error of several percentage points.
+Each cell uses 50 simulated studies, so individual power values carry a 95% margin of error of roughly ±8 to ±14 percentage points; read them as indicating that power is low at this sample size and falls further when the signal is spread over many genes, not as precise estimates. The weak-signal (k = 20) power values are not monotone in n, which we attribute to this simulation noise.
 
 ## What can and cannot be concluded
 
