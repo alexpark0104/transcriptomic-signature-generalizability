@@ -1,0 +1,11 @@
+symbol,entrez_id,ncbi_confirmed,in_discovery,in_external
+IFNG,3458,True,True,True
+STAT1,6772,True,True,True
+CCR5,1234,True,True,True
+CXCL9,4283,True,True,True
+CXCL10,3627,True,True,True
+CXCL11,6373,True,True,True
+IDO1,3620,True,True,True
+PRF1,5551,True,True,True
+GZMA,3001,True,True,True
+HLA-DRA,3122,True,True,True
