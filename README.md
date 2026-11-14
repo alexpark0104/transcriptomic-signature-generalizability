@@ -144,6 +144,7 @@ Carlo error of several percentage points.
   (aliases are logged in `results/external_validation.csv`).
 - Bootstrap intervals on out-of-fold predictions ignore the selection step and
   are descriptive only.
+- 22 of the 73 pre-treatment clinical records had no pre-treatment expression sample in the released expression file (16 had no expression data at all, 6 only an on-treatment sample). Their response rate (5 of 22, 23%) did not differ from that of the analysed patients (10 of 51, 20%; Fisher exact p = 0.76).
 
 ## Note on the inherited candidate signature
 
