@@ -42,6 +42,16 @@ anyway.*
 | Riaz et al. (BMS038), pre-treatment | Discovery | `data/rld.BMS038.20171011.csv`, `data/bms038_clinical_data.csv` | 51 (10 / 41) |
 | Hugo et al., GSE78220 | External | `data/GSE78220_*` | 28 (15 / 13) |
 
+**Sources.** The discovery expression table (`rld.BMS038.20171011.csv`) and
+clinical table (`bms038_clinical_data.csv`) were obtained from the study
+authors' public analysis repository (https://github.com/riazn/bms038_analysis);
+the expression data are associated with GEO accession GSE91061. The 51
+pre-treatment samples with expression data were matched to clinical response
+records by sample identifier. The external cohort files
+(`GSE78220_series_matrix.txt.gz`, `GSE78220_PatientFPKM.xlsx`) come from GEO
+accession GSE78220. SHA-256 checksums of all data files are recorded in
+`results/run_manifest.txt`.
+
 Response: complete/partial response = responder; stable/progressive disease =
 non-responder (discovery labels from `myBOR`, external labels from the GEO
 series matrix). `src/check_labels.py` verifies the mapping and that responders
@@ -297,15 +307,14 @@ results/    CSV/text outputs, figures/, model_audit.txt, run_manifest.txt
 ## References
 
 - Riaz N, et al. Tumor and microenvironment evolution during immunotherapy with
-  nivolumab. Cell 2017. Discovery cohort.
+  nivolumab. Cell 2017. doi:10.1016/j.cell.2017.09.028. Discovery cohort; GEO
+  accession GSE91061.
 - Hugo W, et al. Genomic and transcriptomic features of response to anti-PD-1
-  therapy in metastatic melanoma. Cell 2016. External cohort, GEO accession
-  GSE78220.
+  therapy in metastatic melanoma. Cell 2016;165(1):35-44.
+  doi:10.1016/j.cell.2016.02.065. External cohort; GEO accession GSE78220
+  (series matrix and supplementary patient FPKM table).
 - Ayers M, et al. IFN-gamma-related mRNA profile predicts clinical response to
   PD-1 blockade. J Clin Invest 2017;127(8):2930-2940. doi:10.1172/JCI91190.
-
-<!-- TODO (author): verify these three citations against the papers and add
-     volume, pages, DOIs, and the accession or download source for the Riaz data. -->
 
 ## License
 
