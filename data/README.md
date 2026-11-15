@@ -28,6 +28,9 @@ files that produced the committed results.
 GEO pages: GSE91061 (https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE91061)
 and GSE78220 (https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE78220).
 
+Earlier commits of this repository contained copies of these four files; they
+were removed from the current version.
+
 `entrez_to_symbol.csv` is created by this project from NCBI Gene records
 (`src/build_gene_mapping.py`) and is kept in the repository; the source and
 retrieval date are recorded in the file.
