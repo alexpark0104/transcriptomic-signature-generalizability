@@ -183,3 +183,8 @@ cython_debug/
 __pycache__/
 .venv/
 .DS_Store
+# Raw cohort data: download separately (see data/README.md)
+data/rld.BMS038.20171011.csv
+data/bms038_clinical_data.csv
+data/GSE78220_series_matrix.txt.gz
+data/GSE78220_PatientFPKM.xlsx

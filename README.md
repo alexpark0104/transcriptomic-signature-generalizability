@@ -49,8 +49,10 @@ the expression data are associated with GEO accession GSE91061. The 51
 pre-treatment samples with expression data were matched to clinical response
 records by sample identifier. The external cohort files
 (`GSE78220_series_matrix.txt.gz`, `GSE78220_PatientFPKM.xlsx`) come from GEO
-accession GSE78220. SHA-256 checksums of all data files are recorded in
-`results/run_manifest.txt`.
+accession GSE78220. The raw data files are not redistributed in this
+repository (the sources do not grant explicit redistribution rights);
+`data/README.md` gives download sources, file names and SHA-256 checksums,
+which are also recorded in `results/run_manifest.txt`.
 
 Response: complete/partial response = responder; stable/progressive disease =
 non-responder (discovery labels from `myBOR`, external labels from the GEO
@@ -58,8 +60,6 @@ series matrix). `src/check_labels.py` verifies the mapping and that responders
 have longer progression-free survival (median 87 vs 7 weeks for responders vs
 progressive disease; Mann-Whitney p = 4.9e-6). See References for the source
 papers.
-
-<!-- TODO (author): confirm the data licenses permit redistribution in data/. -->
 
 ## Methods
 
@@ -237,24 +237,29 @@ external cohort, it is reported separately and is not used for any claim above.
   results above. The same earlier version contained a nine-gene sensitivity
   script with hard-coded gene symbols; it was removed because it overwrote the
   current audit file and contradicted the Entrez-to-symbol mapping.
-- Fixed in advance of seeing results: the external scoring rule and direction,
-  and the positive-control success criterion (combined one-sided p < 0.05),
-  both stated in the source code.
-- The positive control did not meet its pre-specified criterion (see Results).
-  The criterion was not changed afterwards.
-- The simulation, the second screening method, the sensitivity analysis and the
-  reframing from "failure to generalize" to "no detectable signal" were added
-  after earlier results were seen. They are reported alongside the original
-  analysis, not instead of it.
-
-<!-- TODO (author): check the last bullet against your own memory of the order in which
-     analyses were added and edit it if any item is wrong. -->
+- None of the analyses were preregistered. The apparent-AUC, nested-CV and
+  external-validation analyses are the primary analyses. The others were added
+  after preliminary apparent, nested-CV and external-validation results had
+  been seen, and are best read as follow-up or sensitivity analyses: the
+  simulation, the second (`train_auc`) screening method, the sensitivity
+  analyses across pipelines, the positive control, and the reframing from
+  "failure to generalize" to "no detectable signal". They are reported
+  alongside the original analysis, not instead of it.
+- Stated in the source code: the external scoring rule and its direction
+  (higher score predicts response; never flipped after seeing a result), and
+  the positive-control success criterion (combined one-sided p < 0.05). In the
+  repository history, `src/positive_control.py` was committed before its
+  results files and was not edited afterwards. The positive control did not
+  meet its criterion (see Results), and the criterion was not changed.
 
 ## Reproducing the results
 
 Python and package versions used are recorded in `results/run_manifest.txt`.
 
 Tested with Python 3.15.0 (package versions pinned in `requirements.txt`; the full environment is in `requirements-lock.txt`). Older Python versions may need different package versions.
+
+The raw data files are not included in this repository. Before running anything,
+download them as described in `data/README.md` and place them in `data/`.
 
 ```
 pip install -r requirements.txt
@@ -300,7 +305,7 @@ python -m pytest tests -v
 ```
 src/        analysis code (analysis.py is the core; one script per analysis)
 tests/      unit tests on synthetic data
-data/       input data and gene-symbol mapping
+data/       gene-symbol mapping; raw cohort data go here (see data/README.md)
 results/    CSV/text outputs, figures/, model_audit.txt, run_manifest.txt
 ```
 
