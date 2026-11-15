@@ -73,9 +73,11 @@ Evaluation levels (`src/analysis.py`):
 3. **Repeated nested CV:** step 2 with 100 different fold assignments.
 4. **Whole-pipeline permutation test:** outcome labels are shuffled (class
    counts fixed) and every step above is repeated, 1000 times.
-5. **External evaluation:** the discovery-fitted weights are applied to the
-   external cohort, with genes log2(FPKM + 1) transformed and z-scored within
-   that cohort. Direction is fixed in advance.
+5. **External evaluation (transportability analysis):** the discovery-fitted
+   weights are applied to the external cohort, with genes log2(FPKM + 1)
+   transformed and z-scored within that cohort (cohort-wise unsupervised
+   normalization; no external outcomes are used). This is not a frozen-
+   preprocessing deployment estimate. Direction is fixed in advance.
 6. **Simulation** (`src/run_simulation.py`): 22,333 independent noise genes,
    about 20% responders, with k informative genes at a chosen oracle AUC; power
    is the share of simulated studies whose nested AUC exceeds the 95th
@@ -101,6 +103,8 @@ Primary method (`inner_cv`); full tables in `results/model_audit.txt`.
 
 The `train_auc` method gives the same picture (apparent 0.990, repeated-CV
 pooled mean 0.495).
+
+The bootstrap 95% interval for the seed-42 nested-CV pooled AUC (0.226 to 0.652; `results/nested_cv_bootstrap_summary.csv`) resamples only the 51 out-of-fold predictions. It is conditional on that one set of folds and selected models and does not resample gene selection or fold assignment, so it understates uncertainty; the repeated-split and permutation results above are the better guide.
 
 **Positive control: criterion not met.** The IFN-gamma score gave AUC 0.65
 (one-sided p = 0.076) in discovery and 0.49 (p = 0.54) externally; combined
@@ -192,10 +196,20 @@ were not tried.
   models and settings were not tried.
 - The two cohorts use different platforms and units (normalised counts vs
   FPKM); within-cohort z-scoring mitigates but does not remove this.
-- A few selected genes were matched to the external cohort by former symbol
-  (aliases are logged in `results/external_validation.csv`).
+- Two genes were matched to the external cohort by a former official symbol:
+  SERTM2 (as LINC00890) and H1-10-AS1 (as H1FX-AS1). The aliases come from
+  the NCBI Gene record (source and retrieval date are in
+  `data/entrez_to_symbol.csv`; the aliases used are logged in
+  `results/external_validation.csv`), and both are previous symbols of the
+  same Entrez gene, not name collisions.
 - Bootstrap intervals on out-of-fold predictions ignore the selection step and
   are descriptive only.
+- `src/analysis.py` suppresses Python warnings globally, and the committed
+  results were generated that way. In a scratch copy of commit 1812890 with the
+  suppression removed, the main pipeline (both screening methods), 5 repeated
+  nested-CV splits and 20 shuffled-label datasets (apparent and nested fits,
+  both methods) produced no warnings. The full 1000-permutation run was not
+  repeated without the suppression.
 
 ## Note on the inherited candidate signature
 
@@ -230,6 +244,8 @@ external cohort, it is reported separately and is not used for any claim above.
 
 Python and package versions used are recorded in `results/run_manifest.txt`.
 
+Tested with Python 3.15.0 (package versions pinned in `requirements.txt`; the full environment is in `requirements-lock.txt`). Older Python versions may need different package versions.
+
 ```
 pip install -r requirements.txt
 python src/run_pipeline.py
@@ -251,6 +267,10 @@ Commit code changes before running `make_audit.py`, which records the commit
 hash and whether the working tree is clean. `make_audit.py` checks that the
 results files agree with one another and are not older than the code; passing
 those checks means the files are consistent, not that the analysis is correct.
+
+`results/run_manifest.txt` records the commit that was checked out when the
+audit was generated. Because the manifest is committed afterwards, it names the
+parent of the commit that contains it.
 
 ## Tests
 

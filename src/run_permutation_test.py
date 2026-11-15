@@ -11,7 +11,8 @@ looks like when there is no real association between expression and response.
 
 The same shuffled labels are used for every screening method (paired), and
 every statistic uses the same fixed fold seed (42) as the observed analysis.
-The run is resumable: finished (method, permutation) rows are kept.
+The run is resumable: progress is saved every 25 permutations and at the end,
+so an interruption loses at most the last 24 permutations.
 """
 import sys
 from pathlib import Path

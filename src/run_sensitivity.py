@@ -16,8 +16,9 @@ shuffles are the same streams as run_permutation_test.py (seed 2026, stream i).
 
 Before anything else the script checks that the baseline pipeline reproduces the
 main analysis exactly, so the sensitivity numbers are directly comparable.
-Permutations run in parallel; finished (config, permutation) rows are kept, so
-the run can be stopped and resumed.
+Permutations run in parallel and are saved after each pipeline finishes all of
+its permutations, so an interrupted run resumes from the last completed
+pipeline (a partly finished pipeline is recomputed).
 """
 import os
 import sys
